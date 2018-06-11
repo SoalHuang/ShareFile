@@ -32,10 +32,23 @@ final class FileViewController: UIViewController {
         super.viewDidLoad()
         title = "Documents"
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: reloadButton)
+        
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "FileCell", bundle: Bundle.main), forCellReuseIdentifier: "cell")
         tableView.rowHeight = 50
         
+        reload()
+    }
+    
+    private lazy var reloadButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        button.setImage(UIImage(named: "re"), for: .normal)
+        button.addTarget(self, action: #selector(reload), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func reload() {
         files = searchFiles()
         tableView.reloadData()
     }
