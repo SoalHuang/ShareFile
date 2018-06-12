@@ -10,11 +10,19 @@ import UIKit
 
 class FileCell: UITableViewCell {
     
+    @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var fileTitle: UILabel!
     @IBOutlet weak var fileSize: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        icon.image = nil
+        fileTitle.text = nil
+        fileSize.text = nil
     }
 }

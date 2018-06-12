@@ -31,8 +31,16 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tlb-q2-AZa">
+                        <rect key="frame" x="35" y="10" width="20" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="nsv-fP-uAn"/>
+                            <constraint firstAttribute="height" constant="24" id="xPY-D7-muG"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="tlb-q2-AZa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0Uo-Rm-gGa"/>
                     <constraint firstItem="TUk-si-XQA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="5eA-qE-uil"/>
                     <constraint firstItem="EST-lq-XVZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TUk-si-XQA" secondAttribute="trailing" constant="10" id="7cT-WA-BED"/>
                     <constraint firstItem="TUk-si-XQA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="9DN-wd-jhg"/>
@@ -40,14 +48,16 @@
                     <constraint firstAttribute="trailing" secondItem="EST-lq-XVZ" secondAttribute="trailing" constant="15" id="Oe1-6F-58T"/>
                     <constraint firstAttribute="bottom" secondItem="TUk-si-XQA" secondAttribute="bottom" constant="1" id="Wic-E0-6dp"/>
                     <constraint firstItem="EST-lq-XVZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="ZWZ-xJ-dp6"/>
+                    <constraint firstItem="tlb-q2-AZa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="35" id="pOu-Za-zYJ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="fileSize" destination="EST-lq-XVZ" id="lQz-vR-p43"/>
                 <outlet property="fileTitle" destination="TUk-si-XQA" id="usd-l6-5Ct"/>
+                <outlet property="icon" destination="tlb-q2-AZa" id="u6M-SX-doU"/>
             </connections>
-            <point key="canvasLocation" x="-343" y="-73"/>
+            <point key="canvasLocation" x="-102.5" y="-99"/>
         </tableViewCell>
     </objects>
 </document>
