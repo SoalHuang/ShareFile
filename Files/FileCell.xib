@@ -32,10 +32,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tlb-q2-AZa">
-                        <rect key="frame" x="35" y="10" width="20" height="24"/>
+                        <rect key="frame" x="35" y="11" width="30" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="20" id="nsv-fP-uAn"/>
-                            <constraint firstAttribute="height" constant="24" id="xPY-D7-muG"/>
+                            <constraint firstAttribute="width" constant="30" id="nsv-fP-uAn"/>
+                            <constraint firstAttribute="height" constant="22" id="xPY-D7-muG"/>
                         </constraints>
                     </imageView>
                 </subviews>
