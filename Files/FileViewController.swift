@@ -9,16 +9,20 @@
 import UIKit
 
 private let OneKB: UInt64 = 1024
-private let OneMB: UInt64 = 1024 * 1024
+private let OneMB: UInt64 = 1024 * OneKB
+private let OneGB: UInt64 = 1024 * OneMB
 extension UInt64 {
     var fileSize: String {
         if self < OneKB {
-            return "\(self) Byte"
+            return "\(self) bytes"
         }
         if self < OneMB {
             return "\(self / OneKB) KB"
         }
-        return "\(self / OneMB) MB"
+        if self < OneGB {
+            return "\(self / OneMB) MB"
+        }
+        return "\(self / OneGB) GB"
     }
 }
 
@@ -55,8 +59,8 @@ final class FileViewController: UIViewController {
     
     private func searchFiles() -> [(String, String)] {
         let documents = NSHomeDirectory() + "/Documents"
-        let subs = FileManager.default.subpaths(atPath: documents)
-        return subs?.compactMap({ (path) -> (String, String)? in
+        let contents = try? FileManager.default.contentsOfDirectory(atPath: documents)
+        return contents?.compactMap({ (path) -> (String, String)? in
             guard let size = (try? FileManager.default.attributesOfItem(atPath: documents + "/" + path) as NSDictionary)?.fileSize() else {
                 return (path, "unknow")
             }
