@@ -45,7 +45,6 @@ final class FileViewController: UIViewController {
         tableView.rowHeight = 50
         
         push(documents)
-        reload()
     }
     
     private lazy var reloadButton: UIButton = {
@@ -56,7 +55,7 @@ final class FileViewController: UIViewController {
     }()
     
     @objc private func reload() {
-        files = searchFiles()
+        files = searchFiles(path: fullPath())
         tableView.reloadData()
     }
 }
@@ -96,7 +95,6 @@ extension FileViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         if !isRootPath, indexPath.row == 0 {
             pop()
-            reload()
             return
         }
         let file = files[isRootPath ? indexPath.row : indexPath.row - 1]
@@ -105,11 +103,11 @@ extension FileViewController: UITableViewDelegate {
             return
         }
         push(file.0)
-        reload()
     }
 }
 
 extension FileViewController {
+    
     private var isRootPath: Bool {
         return pathStack.count == 1
     }
@@ -126,6 +124,7 @@ extension FileViewController {
     @discardableResult
     private func push(_ path: String) -> String? {
         pathStack.append(path)
+        reload()
         return pathStack.last
     }
     
@@ -133,17 +132,30 @@ extension FileViewController {
     private func pop() -> String? {
         if isRootPath { return pathStack.last }
         pathStack.removeLast()
+        reload()
         return pathStack.last
     }
-    
-    private func searchFiles() -> [(String, String)] {
-        let path = fullPath()
-        let contents = try? FileManager.default.contentsOfDirectory(atPath: path)
-        return contents?.compactMap({ (subPath) -> (String, String)? in
-            guard let size = (try? FileManager.default.attributesOfItem(atPath: path + "/" + subPath) as NSDictionary)?.fileSize() else {
-                return (subPath, "--")
-            }
-            return (subPath, size.fileSize)
-        }) ?? []
+}
+
+private func searchFiles(path: String) -> [(String, String)] {
+    let contents = try? FileManager.default.contentsOfDirectory(atPath: path)
+    return contents?.compactMap({ (subPath) -> (String, String)? in
+        guard let attri = (try? FileManager.default.attributesOfItem(atPath: path + "/" + subPath) as NSDictionary) else {
+            return (subPath, "--")
+        }
+        if attri.fileType() == FileAttributeType.typeDirectory.rawValue {
+            return (subPath, "")
+        }
+        let size = attri.fileSize()
+        return (subPath, size.fileSize)
+    }) ?? []
+}
+
+private func calculateSize(path: String) throws -> UInt64 {
+    let contents = try FileManager.default.contentsOfDirectory(atPath: path)
+    let calculateContent: (String) -> UInt64 = {
+        guard let attributes = try? FileManager.default.attributesOfItem(atPath: path.appending("/\($0)")) else { return 0 }
+        return (attributes as NSDictionary).fileSize()
     }
+    return contents.reduce(0) { $0 + calculateContent($1) }
 }
